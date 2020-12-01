@@ -16,9 +16,17 @@
 	<link rel="shortcut icon" href="">
 </head>
 <style>
+	
 	.layout_button{
 		display: grid;
-  		grid-template-columns: 200px;
+  		grid-template-columns: auto;
+		grid-row-gap: 30%;
+		justify-content:center;
+	}
+	.item{
+		display: flex; 
+  		justify-content: center; 
+  		align-items: center;
 	}
 	.button {
 		display: inline-block;
@@ -29,16 +37,17 @@
 		text-decoration: none;
 		outline: none;
 		color: #fff;
-		background-color: #4CAF50;
+		background-color: #3293a0;
 		border: none;
 		border-radius: 15px;
 		box-shadow: 0 9px #999;
+		
 		}
 
-		.button:hover {background-color: #3e8e41}
+		.button:hover {background-color: #3293a0}
 
 		.button:active {
-		background-color: #3e8e41;
+		background-color: #3293a0;
 		box-shadow: 0 5px #666;
 		transform: translateY(4px);
 	}
@@ -46,11 +55,12 @@
 <body>
    <!-- <button type="button" href="./3DHOP/3DHOP_all_tools.html">3DHOP</button>
 	<button type="button" href="./POTREE/viewer.html">Potree</button>-->
+	<h1 style="text-align: center; margin-top: 30px; margin-bottom: 30px;">choose your Viewer</h1>
 	<div class="layout_button">
-		<form action="./3DHOP/3DHOP_all_tools.html">
+		<form class="item" action="./3DHOP/3DHOP_all_tools.html">
 			<input class="button" type="submit" value="3DHOP" />
 		</form>
-		<form action="./POTREE/viewer.html">
+		<form class="item" action="./POTREE/viewer.html">
 			<input class="button" type="submit" value="Potree" />
 		</form>
 	</div>
