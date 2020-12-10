@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>3D Viewer</title>
+	<meta name="description" content="prototyp"/>
+	<meta name="author" content="Manuel Schilling"/>
+	<meta name="msapplication-TileColor" content="#317EFB"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="#317EFB"/>
+	<meta name="apple-mobile-web-app-title" content="3D Viewer"/>
+	<meta name="theme-color" content="#317EFB"/>
+	<link rel="manifest" href="start.json" type="text/json"/>
+	<link rel="shortcut icon" href="">
+</head>
+<style>
+	* {
+		box-sizing: border-box;
+        font-family: "Times New Roman", Times, sans-serif;
+        /*font-family: Tahoma, Verdana, sans-serif;*/
+        /*font-style: italic;*/
+    }
+	body {
+		margin: 0;
+	}
+	/* Style the header */
+    header {
+        border: 0;
+        background-color: rgba(85, 114, 161, .9);
+        height: 50px;
+        
+    }
+    .container{
+        height: 920px;
+        /*background-color: rgba(155, 114, 161, .9);*/
+		width: 100%;
+    }
+    .leftside{
+        float: left;
+        width: 65%;
+        height: 100%;
+        /*background-color: aqua;*/
+        padding: 30px 60px 20px 60px;
+        border-right: black;
+        border-right-width: 100px;
+    }
+    h1{
+        width: 100%;
+        font-size: 40px;
+        background-color: cornflowerblue;
+        margin-top: 0px;
+    }
+    iframe{
+        width:100%;
+        height: 650px;
+    }
+    .rightside{
+        float: right;
+        padding: 30px 60px 20px 60px;
+        width: 35%;
+        height: 100%;
+        overflow: auto;
+        /*background-color: brown;*/
+    }
+    .select-bar{
+        width: 100%;
+        height: 50px;
+        background-color:rgba(85, 114, 161, .9);
+    }
+    .detailsbutton{
+        background-color:  rgb(206, 206, 206);
+        text-align: center;
+        font-size: 16px;
+        width: 50%;
+        height: 100%;
+        transition-duration: 0.4s;
+        cursor: pointer;
+        float: left;
+        border: none;
+    }
+    .relatedbutton{
+        text-align: center;
+        background-color: rgb(206, 206, 206);
+        font-size: 16px;
+        width: 50%;
+        height: 100%;
+        transition-duration: 0.4s;
+        cursor: pointer;
+        float: right;
+        border: none;
+    }
+    .detailsbutton:hover, .relatedbutton:hover{
+        background-color: rgba(18, 50, 102, 0.9);
+        color: white;
+    }
+    .active{
+        background-color: rgba(85, 114, 161, .9);
+        color: white;
+    }
+    .details-content{
+        width: 100%;
+        display: none;
+    }
+    .related-content{
+        width: 100%;
+        display: none;
+    }
+    h2{
+        width: 100%;
+        font-size: 30px;
+        text-align: center;
+    }
+    h3{
+        width: 100%;
+        font-size: 22px;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+    p{
+        width: 100%;
+        font-size: 20px;
+        color: rgb(59, 59, 59);
+        margin: 6px 0px 6px 0px;
+    }
+    /* Style the footer */
+    footer {
+        font-size: 12px;
+        height: 50px;
+        bottom: 0;
+        width: 100%;
+        background-color: #e2e2e2;
+    }
+	@media only screen and (orientation: portrait) {
+		
+	}
+	@media only screen and (orientation: landscape) {
+		
+	}
+    /* width */
+    ::-webkit-scrollbar {
+        width: 10px;
+        border: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 3px grey; 
+       
+    }
+    
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: rgba(109, 109, 109, 0.3); 
+        border-radius: 10px;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(130, 130, 130, 0.9); 
+    }
+</style>
+<body onload="OnInit();">
+    <header><img src="./bar.PNG" alt="bar"></header>
+    <div class="container">
+        <div class="leftside">
+            <h1 class=".objectname">Ostia201</h1>
+            <iframe src="./3DHOP_all_tools.html" frameborder="0"></iframe>
+            <a href="./models/Feetply.nxs" download="./models/Feetply.nxs">downlaod</a>
+        </div>
+        <div id="rightside" class="rightside">
+            <div class="select-bar">
+                <button id="detailsbutton" class="detailsbutton" onclick="displayDetails(event);">Details</button>
+                <button id="relatedbutton" class="relatedbutton" onclick="displayRelated(event);">Verbunden</button>
+            </div>
+            <div id="details-content" class="details-content"></div>
+            <div id="related-content" class="related-content"></div>
+        </div>
+    </div>
+    <footer><img src="./footer.PNG" alt="footer"></footer>
+</body>
+<script>
+
+    var detailsBlock = [
+        {infoHead: "Beschreibung", infoText: "Hier steht die Beschreibung des Objektes. Nachfolgender Text wurde nur verfasst, damit ich etwas mehr Text habe."},
+        {infoHead: "Autor", infoText: "Max Mustermann, DAI-Project"},
+        {infoHead: "Forschungsdaten", infoText: "kfsadbf alwrfaweifawfb akwjbfjasbf bjfasb fawbfbas jkfjwbfsfw  jvbfasjkhbfg wjhbfgjasbr"},
+        {infoHead: "Datierung", infoText: "hadrianisch"},
+        {infoHead: "Lokalisierung", infoText: "shfoiseiffisufsiv asihisdf sduhidfu gdigifdhiasdhg ihdih fds iadgiuh asughadfig hsaiug sdis su sfiusb  sfiu siufsdiu biubsdiu sdibsdibsdiu sdib  oiusdi bsdi bsdi ubsfisbdfis ib isfsdib sdi bib  lihisbduzb sdibsd ib sdibsduhbsiudbsduz fsdb ibhsad hsapuasfhs sahas asdhsa psdh aspohsish oshfdoiuh asfdfasfdpoih asfpohsfd iposfoihasfdoaphs afpoihs fdofd afdo ihdafoiahfdp oasoahdaohofdh oapd  ufdou asefi"},
+        {infoHead: "Technik", infoText: "Bildhauerei"},
+        {infoHead: "Material", infoText: "Marmor"},
+        {infoHead: "Erhaltung", infoText: "vollständig"},
+        {infoHead: "Maße", infoText: "Breite: 190cm\nHöhe:   79cm\nTiefe:  50cm"}
+    ];
+    var relatedBlock = [
+        { name: "Literatur", works:[
+            {autor: "W. Helbig", title: "Führer durch die öffentliche SAmmlung klassischer Alttümer"},
+            {autor: "H. Brunn", title: "Denkmäler griechischer und römischer Skulputur"},
+            {autor: "H. Stuart Jones", title: "The Scuptures of the Museo Capitolino"},
+            {autor: "H.-J. Schalles", title: "Untersuchungen zur Kulturpolitik der pergamenischen Herrscher"},
+            {autor: "A. Schober", title: "Die Kunst von Pergamon"}
+        ]},
+        { name: "Buchseiten", works:[
+            {autor: "W. Helbig", title: "Führer durch die öffentliche SAmmlung klassischer Alttümer"},
+            {autor: "H. Brunn", title: "Denkmäler griechischer und römischer Skulputur"},
+            {autor: "H. Stuart Jones", title: "The Scuptures of the Museo Capitolino"}
+        ]},
+        { name: "Reproduktion", works:[
+            {autor: "W. Helbig", title: "Führer durch die öffentliche SAmmlung klassischer Alttümer"},
+            {autor: "H. Stuart Jones", title: "The Scuptures of the Museo Capitolino"}
+        ]},
+        { name: "Sammlungen", works:[
+            {autor: "W. Helbig", title: "Führer durch die öffentliche SAmmlung klassischer Alttümer"}
+        ]},
+        { name: "Rezeption", works:[
+            {autor: "W. Helbig", title: "Führer durch die öffentliche SAmmlung klassischer Alttümer"},
+            {autor: "H. Brunn", title: "Denkmäler griechischer und römischer Skulputur"},
+            {autor: "H. Stuart Jones", title: "The Scuptures of the Museo Capitolino"}
+        ]},
+        { name: "Typen", works:[
+            {autor: "W. Helbig", title: "Führer durch die öffentliche SAmmlung klassischer Alttümer"},
+            {autor: "H. Brunn", title: "Denkmäler griechischer und römischer Skulputur"},
+            {autor: "H. Stuart Jones", title: "The Scuptures of the Museo Capitolino"},
+            {autor: "A. Schober", title: "Die Kunst von Pergamon"}
+        ]}
+    ];
+    function loadDetails(){
+        var obinfo = document.createElement("H2");
+        obinfo.innerHTML = "Objektinformationen";
+        var detailsContent = document.getElementById("details-content");
+        detailsContent.appendChild(obinfo);
+
+        for (let i = 0; i < detailsBlock.length; i++) {
+            var heading = document.createElement("H3");
+            heading.innerHTML = detailsBlock[i].infoHead;
+            var infoText = document.createElement("P");
+            infoText.innerHTML = detailsBlock[i].infoText;
+            detailsContent.appendChild(heading);
+            detailsContent.appendChild(infoText);
+        }
+    }
+    function loadRelated(){
+        var relatedContent = document.getElementById("related-content");
+        for (let i = 0; i < relatedBlock.length; i++) {
+            var relatedTopicButton = document.createElement("BUTTON");
+            relatedTopicButton.innerHTML = relatedBlock[i].name;
+            relatedTopicButton.style.width ="100%";
+            var relatedTopicContent = document.createElement("DIV");
+            relatedTopicContent.style.display ="none";
+            relatedTopicContent.style.width = "100%";
+            relatedContent.appendChild(relatedTopicButton);
+            relatedContent.appendChild(relatedTopicContent);
+            var works = relatedBlock[i].works;
+            for (let j = 0; j < works.length; j++){
+                var content = document.createElement("DIV");
+                content.innerHTML = works[j].autor + ', ' + works[j].title;
+                console.log(content.innerHTML);
+                content.style.width = "100%";
+                relatedTopicContent.appendChild(content);
+            }
+            relatedTopicButton.addEventListener("click", function(event){
+                event.target.classList.toggle("active");
+                if (event.target.nextElementSibling.style.display === "inline") 
+                event.target.nextElementSibling.style.display = "none";
+                else 
+                event.target.nextElementSibling.style.display = "inline";
+                console.log(event.target);
+                console.log(event.target.nextElementSibling);
+                //console.log(event.target.nextElementSibling.children)
+            });
+            
+        }
+    }
+
+    function displayDetails(event){
+        var relatedContent = document.getElementById("related-content");
+        var relatedbutton = document.getElementById("relatedbutton");
+        relatedbutton.classList.remove("active");
+        relatedContent.style.display = "none";
+        var detailsContent = document.getElementById("details-content");
+        event.target.classList.add("active");
+        detailsContent.style.display = "inline";
+    }
+    function displayRelated(event){
+        var detailsContent = document.getElementById("details-content");
+        var detailsbutton = document.getElementById("detailsbutton");
+        detailsbutton.classList.remove("active");
+        detailsContent.style.display = "none";
+        var relatedContent = document.getElementById("related-content");
+        event.target.classList.add("active");
+        relatedContent.style.display = "inline";
+    }
+    function OnInit() {
+        loadDetails();
+        loadRelated();
+        document.getElementById("detailsbutton").classList.add("active");
+        var detailsContent = document.getElementById("details-content");
+        detailsContent.style.display = "inline";
+    }
+</script>
+</html>
