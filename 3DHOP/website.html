@@ -27,7 +27,7 @@
 	}
 	/* Style the header */
     header {
-        border: 0;
+        border: none;
         background-color: rgba(85, 114, 161, .9);
         height: 50px;
         
@@ -42,26 +42,39 @@
         width: 65%;
         height: 100%;
         /*background-color: aqua;*/
-        padding: 30px 60px 20px 60px;
-        border-right: black;
-        border-right-width: 100px;
+        padding: 50px 30px 0px 30px;
     }
     h1{
         width: 100%;
         font-size: 40px;
-        background-color: cornflowerblue;
         margin-top: 0px;
     }
     iframe{
         width:100%;
         height: 650px;
+        margin: 30px 0 30px 0;
+    }
+   
+    a:link, a:visited {
+        background-color: rgba(85, 114, 161, .9);
+        border: none;
+        color: white;
+        padding: 12px 30px;
+        cursor: pointer;
+        font-size: 20px;
+        text-align: center;
+        text-decoration: none;
+        float: right;
+    }
+
+    a:hover, a:active {
+        background-color: rgba(18, 50, 102, 0.9);
     }
     .rightside{
         float: right;
-        padding: 30px 60px 20px 60px;
         width: 35%;
         height: 100%;
-        overflow: auto;
+        border: 1px solid rgba(207, 207, 207, 0.9);
         /*background-color: brown;*/
     }
     .select-bar{
@@ -91,13 +104,47 @@
         float: right;
         border: none;
     }
-    .detailsbutton:hover, .relatedbutton:hover{
+    .contentbutton{
+        text-align: left;
+        background-color: rgb(243, 243, 243);
+        font-size: 16px;
+        width: 100%;
+        height: 40px;
+        margin: 6px 0 6px 0;
+        transition-duration: 0.4s;
+        cursor: pointer;
+        border: 2px solid rgb(134, 134, 134);
+        border-radius: 5px;
+    }
+    span{
+        float: right;
+        min-width: 10px;
+        padding: 3px 7px;
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 1;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        background-color: #777;
+        border-radius: 10px;
+        content: attr(works);
+    } 
+    .detailsbutton:hover, .relatedbutton:hover,.contentbutton:hover{
         background-color: rgba(18, 50, 102, 0.9);
         color: white;
+
     }
     .active{
         background-color: rgba(85, 114, 161, .9);
         color: white;
+    }
+    .content{
+        overflow: auto;
+        width: 100%;
+        height: 870px;
+        padding: 20px 30px 0 30px;
     }
     .details-content{
         width: 100%;
@@ -107,6 +154,14 @@
         width: 100%;
         display: none;
     }
+    .divContent{
+        border: 2px solid rgb(190, 190, 190);
+        border-radius: 5px;
+        background-color: rgb(255, 255, 255);
+        width: 100%;
+        padding: 6px;
+        margin:  0 0 6px 0;
+    }
     h2{
         width: 100%;
         font-size: 30px;
@@ -114,9 +169,8 @@
     }
     h3{
         width: 100%;
-        font-size: 22px;
+        font-size: 21px;
         margin-bottom: 0;
-        padding-bottom: 0;
     }
     p{
         width: 100%;
@@ -167,21 +221,22 @@
         <div class="leftside">
             <h1 class=".objectname">Ostia201</h1>
             <iframe src="./3DHOP_all_tools.html" frameborder="0"></iframe>
-            <a href="./models/Feetply.nxs" download="./models/Feetply.nxs">downlaod</a>
+            <a class="download" href="./models/Feetply.nxs" download="./models/Feetply.nxs">downlaod</a>
         </div>
         <div id="rightside" class="rightside">
             <div class="select-bar">
                 <button id="detailsbutton" class="detailsbutton" onclick="displayDetails(event);">Details</button>
-                <button id="relatedbutton" class="relatedbutton" onclick="displayRelated(event);">Verbunden</button>
+                <button id="relatedbutton" class="relatedbutton"  onclick="displayRelated(event);">Verbunden</button>
             </div>
-            <div id="details-content" class="details-content"></div>
-            <div id="related-content" class="related-content"></div>
+            <div class="content">
+                <div id="details-content" class="details-content"></div>
+                <div id="related-content" class="related-content"></div>
+            </div>
         </div>
     </div>
     <footer><img src="./footer.PNG" alt="footer"></footer>
 </body>
 <script>
-
     var detailsBlock = [
         {infoHead: "Beschreibung", infoText: "Hier steht die Beschreibung des Objektes. Nachfolgender Text wurde nur verfasst, damit ich etwas mehr Text habe."},
         {infoHead: "Autor", infoText: "Max Mustermann, DAI-Project"},
@@ -243,36 +298,42 @@
     function loadRelated(){
         var relatedContent = document.getElementById("related-content");
         for (let i = 0; i < relatedBlock.length; i++) {
+            var works = relatedBlock[i].works;
+
             var relatedTopicButton = document.createElement("BUTTON");
             relatedTopicButton.innerHTML = relatedBlock[i].name;
-            relatedTopicButton.style.width ="100%";
+            relatedTopicButton.classList.add("contentbutton");
+            
+            var relatedTopicButtonNumber = document.createElement("SPAN");
+            relatedTopicButtonNumber.innerHTML = works.length;
+            
             var relatedTopicContent = document.createElement("DIV");
             relatedTopicContent.style.display ="none";
             relatedTopicContent.style.width = "100%";
+
+            relatedTopicButton.appendChild(relatedTopicButtonNumber);
             relatedContent.appendChild(relatedTopicButton);
             relatedContent.appendChild(relatedTopicContent);
-            var works = relatedBlock[i].works;
+            //<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
             for (let j = 0; j < works.length; j++){
-                var content = document.createElement("DIV");
+                var divforContent = document.createElement("DIV");
+                divforContent.classList.add("divContent");
+                var content = document.createElement("a");
                 content.innerHTML = works[j].autor + ', ' + works[j].title;
-                console.log(content.innerHTML);
                 content.style.width = "100%";
-                relatedTopicContent.appendChild(content);
+                divforContent.appendChild(content);
+                relatedTopicContent.appendChild(divforContent);
             }
             relatedTopicButton.addEventListener("click", function(event){
                 event.target.classList.toggle("active");
                 if (event.target.nextElementSibling.style.display === "inline") 
-                event.target.nextElementSibling.style.display = "none";
+                    event.target.nextElementSibling.style.display = "none";
                 else 
-                event.target.nextElementSibling.style.display = "inline";
-                console.log(event.target);
-                console.log(event.target.nextElementSibling);
-                //console.log(event.target.nextElementSibling.children)
+                    event.target.nextElementSibling.style.display = "inline";
             });
             
         }
     }
-
     function displayDetails(event){
         var relatedContent = document.getElementById("related-content");
         var relatedbutton = document.getElementById("relatedbutton");
