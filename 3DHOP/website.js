@@ -1,13 +1,19 @@
 var detailsBlock = [
-    {infoHead: "Beschreibung", infoText: "Hier steht die Beschreibung des Objektes. Nachfolgender Text wurde nur verfasst, damit ich etwas mehr Text habe."},
-    {infoHead: "Autor", infoText: "Max Mustermann, DAI-Project"},
-    {infoHead: "Forschungsdaten", infoText: "kfsadbf alwrfaweifawfb akwjbfjasbf bjfasb fawbfbas jkfjwbfsfw  jvbfasjkhbfg wjhbfgjasbr"},
+    {infoHead: "Beschreibung", infoText: "3D- Modell von Schicht 201 aus dem Jahr 2011. An der nord-westlichen Exke des Kapitols gelegen. Enthält Keramikfunde."},
+    {infoHead: "Autor", infoText: "Max Mustermann, Ostia Forum Project"},
+    {infoHead: "Forschungsdaten", infoText: "Neu-Berechnung mit Meshroom 1.1., 2020; 31 Fotos, georeferenziert."},
+    {infoHead: "Maße", infoText: "Maße: 2,35m x 1,4m, Höhe: 89,00 N. N."},
     {infoHead: "Datierung", infoText: "hadrianisch"},
-    {infoHead: "Lokalisierung", infoText: "shfoiseiffisufsiv asihisdf sduhidfu gdigifdhiasdhg ihdih fds iadgiuh asughadfig hsaiug sdis su sfiusb  sfiu siufsdiu biubsdiu sdibsdibsdiu sdib  oiusdi bsdi bsdi ubsfisbdfis ib isfsdib sdi bib  lihisbduzb sdibsd ib sdibsduhbsiudbsduz fsdb ibhsad hsapuasfhs sahas asdhsa psdh aspohsish oshfdoiuh asfdfasfdpoih asfpohsfd iposfoihasfdoaphs afpoihs fdofd afdo ihdafoiahfdp oasoahdaohofdh oapd  ufdou asefi"},
+    {infoHead: "EntityID", infoText: "123456"},
+    {infoHead: "Publikationsjahr", infoText: "2011"},
+    {infoHead: "DOI", infoText: "10.12345/6789"},
+    {infoHead: "Version", infoText: "1"},
+    {infoHead: "Lizenz", infoText: "Creative Commons SA-BY-NC 4.0"},
+    {infoHead: "Lokalisierung", infoText: "Irgendwo im Nirgendwo."},
     {infoHead: "Technik", infoText: "Bildhauerei"},
     {infoHead: "Material", infoText: "Marmor"},
     {infoHead: "Erhaltung", infoText: "vollständig"},
-    {infoHead: "Maße", infoText: "Breite: 190cm\nHöhe:   79cm\nTiefe:  50cm"}
+    
 ];
 var relatedBlock = [
     { name: "Literatur", works:[
@@ -55,6 +61,10 @@ function loadDetails(){
         detailsContent.appendChild(heading);
         detailsContent.appendChild(infoText);
     }
+    var placeHolder = document.createElement("DIV");
+    placeHolder.style.width = "100%";
+    placeHolder.style.height = "100px";
+    detailsContent.appendChild(placeHolder);
 }
 function loadRelated(){
     var relatedContent = document.getElementById("related-content");
@@ -85,6 +95,7 @@ function loadRelated(){
             divforContent.appendChild(content);
             relatedTopicContent.appendChild(divforContent);
         }
+    
         relatedTopicButton.addEventListener("click", function(event){
             event.target.classList.toggle("active");
             if (event.target.nextElementSibling.style.display === "inline") 
