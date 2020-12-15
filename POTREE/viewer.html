@@ -13,7 +13,6 @@
 	<link rel="stylesheet" type="text/css" href="./libs/spectrum/spectrum.css">
 	<link rel="stylesheet" type="text/css" href="./libs/jstree/themes/mixed/style.css">
 </head>
-
 <body>
 	<script src="./libs/jquery/jquery-3.1.1.min.js"></script>
 	<script src="./libs/spectrum/spectrum.js"></script>
@@ -36,6 +35,10 @@
 	<div class="potree_container" style="position: absolute; width: 100%; height: 100%; left: 0px; top: 0px; ">
 		<div id="potree_render_area" style="background-image: url('./build/potree/resources/images/loading.jpg');"></div>
 		<div id="potree_sidebar_container"> </div>
+		<div style="position: fixed; right: 0; bottom: 0; z-index: 1;">
+			<img style="height: 48px; width: 48px;" src="./full_on.png" alt="full_on">
+			<img style="height: 48px; width: 48px;" src="./full.png" alt="full">
+		</div>
 	</div>
 	
 	<script>
@@ -76,7 +79,5 @@
 		});
 		
 	</script>
-	
-	
   </body>
 </html>
