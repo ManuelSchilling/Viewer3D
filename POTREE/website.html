@@ -21,16 +21,14 @@
     <div class="container">
         <div class="leftside">
             <h1 class=".objectname">3D model of trench 201, Ostia Antica 2011</h1>
-            <button onclick="fullscreen(event);">fullscreen</button>
-            <iframe id="viewer" allowfullscreen="true" src="./viewer.html" frameborder="0" title="Potree Viewer"></iframe>
-            
+            <iframe id="viewer" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" src="./viewer.html" frameborder="0" title="Potree Viewer"></iframe>
             <div class="citation"><p><b>Citation: </b>3D model of trench 201, Ostia antica, Max Mustermann, Ostia Forum Project, 2011, DOI: 10.12345/6789</p></div>          
             <a class="download" href="./resources/models/TerraSigillataMesh.ply" download="./models/Feetply.nxs">downlaod</a>
         </div>
-        <div class="rightside" class="rightside">
+        <div class="rightside">
             <div class="select-bar">
                 <button id="detailsbutton" class="detailsbutton" onclick="displayDetails(event);">Details</button>
-                <button id="relatedbutton" class="relatedbutton"  onclick="displayRelated(event);">Verbunden</button>
+                <button id="relatedbutton" class="relatedbutton" onclick="displayRelated(event);">Verbunden</button>
             </div>
             <div class="content">
                 <div id="details-content" class="details-content"></div>

@@ -131,17 +131,3 @@ function OnInit() {
     var detailsContent = document.getElementById("details-content");
     detailsContent.style.display = "inline";
 }
-/* Function to open fullscreen mode */
-function fullscreen(event){
-    /* Get the element you want displayed in fullscreen */ 
-    var viewer = document.getElementById("viewer");
-
-    if (viewer.requestFullscreen) {
-        viewer.requestFullscreen();
-    } else if (viewer.webkitRequestFullscreen) { /* Safari */
-        viewer.webkitRequestFullscreen();
-    } else if (viewer.msRequestFullscreen) { /* IE11 */
-        viewer.msRequestFullscreen();
-    }
-    
-}
